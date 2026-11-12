@@ -9,6 +9,14 @@ describe('mojangson', function () {
     ['{EmptyArray: []}', { type: 'compound', value: { EmptyArray: { type: 'list', value: {} } } }],
     ['{key:value}', { type: 'compound', value: { key: { value: 'value', type: 'string' } } }],
     ['{key:"value"}', { type: 'compound', value: { key: { value: 'value', type: 'string' } } }],
+    ['{"01":"01","1e2":"1e2","true":"true"}', {
+      type: 'compound',
+      value: {
+        '01': { value: '01', type: 'string' },
+        '1e2': { value: '1e2', type: 'string' },
+        true: { value: 'true', type: 'string' }
+      }
+    }],
     ['{key:"va,lue"}', { type: 'compound', value: { key: { value: 'va,lue', type: 'string' } } }],
     ['{k1:v1,k2:v2}', { type: 'compound', value: { k1: { value: 'v1', type: 'string' }, k2: { value: 'v2', type: 'string' } } }],
     ['{number:0s}', { type: 'compound', value: { number: { value: 0, type: 'short' } } }],

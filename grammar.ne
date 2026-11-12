@@ -19,7 +19,7 @@ JARRAY -> "[" _ "]" {% (d) => { return { type: 'list', value: {} } } %}
 
 PAIR -> STRING _ ":" _ JVALUE {% (d) => [d[0].value, d[4]] %}
 
-STRING -> "\"" ( [^\\"] | "\\" ["bfnrt\/\\] | "\\u" [a-fA-F0-9] [a-fA-F0-9] [a-fA-F0-9] [a-fA-F0-9] ):* "\"" {% (d) => parseValue( JSON.parse(d.flat(3).map(b => b.replace('\n', '\\n')).join('')) ) %}
+STRING -> "\"" ( [^\\"] | "\\" ["bfnrt\/\\] | "\\u" [a-fA-F0-9] [a-fA-F0-9] [a-fA-F0-9] [a-fA-F0-9] ):* "\"" {% (d) => ({ value: JSON.parse(d.flat(3).map(b => b.replace('\n', '\\n')).join('')), type: 'string' }) %}
         | [^\"\'}\]:;,\s]:+ {% (d) => parseValue(d[0].join('')) %}
 
 SINGLE_QUOTED_STRING -> "'" ( [^\\'] | "\\" ["bfnrt\/\\'] | "\\u" [a-fA-F0-9] [a-fA-F0-9] [a-fA-F0-9] [a-fA-F0-9] ):* "'" {% (d) => parseSingleQuoteString(d) %}
